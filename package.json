@@ -1,6 +1,6 @@
 {
   "name": "phasic",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Run functions in phases. Useful for load and performance testing",
   "main": "dist/index.js",
   "scripts": {

@@ -63,4 +63,4 @@ runPhases<Response>(phases, () => fetch('http://localhost:3000').catch(() => err
 
 In this example, we're making a HTTP request to `http://localhost:3000` and reporting the error rate
 
-The runPhases function returns a `Promise<PromiseSettledResult<any>[]>`. You can learn more about it in the [`Promise.allSettled()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled) MDN article
+The runPhases function returns a `Promise<PromiseSettledResult<T>[]>`. You can learn more about it in the [`Promise.allSettled()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled) MDN article

@@ -7,10 +7,10 @@ export type PhaseFunction = {
   (): Promise<any>
 }
 
-function runPhase (phase: Phase, func: PhaseFunction) {
+function runPhase<T> (phase: Phase, func: PhaseFunction): Promise<PromiseSettledResult<T>[]> {
   return new Promise((resolve, reject) => {
-    const phaseResults: PromiseSettledResult<any>[] = []
-    const phaseTimer = setInterval(() => [...Array(phase.arrivalRate).keys()].forEach(async () => phaseResults.push(await func())), 1000)
+    const phaseResults: Promise<T>[] = []
+    const phaseTimer = setInterval(() => [...Array(phase.arrivalRate).keys()].forEach(() => phaseResults.push(func())), 1000)
 
     setTimeout(() => {
       clearInterval(phaseTimer)
@@ -21,11 +21,11 @@ function runPhase (phase: Phase, func: PhaseFunction) {
 
 export function runPhases<T> (phases: Phase[], func: PhaseFunction): Promise<PromiseSettledResult<T>[]> {
   return new Promise(async (resolve, reject) => {
-    const results = []
+    const results: PromiseSettledResult<T>[][] = []
     for (const phase of phases) {
-      results.push(await runPhase(phase, func))
+      results.push(await runPhase<T>(phase, func))
     }
 
-    resolve(results.flat() as PromiseSettledResult<any>[])
+    resolve(results.flat())
   })
 }
