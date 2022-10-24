@@ -19,7 +19,7 @@ function runPhase (phase: Phase, func: PhaseFunction) {
   })
 }
 
-export function runPhases (phases: Phase[], func: PhaseFunction): Promise<PromiseSettledResult<any>[]> {
+export function runPhases<T> (phases: Phase[], func: PhaseFunction): Promise<PromiseSettledResult<T>[]> {
   return new Promise(async (resolve, reject) => {
     const results = []
     for (const phase of phases) {

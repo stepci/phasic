@@ -1,5 +1,5 @@
 import { runPhases } from '../src'
-const fetch = require('node-fetch')
+import fetch, { Response } from 'node-fetch'
 
 const phases = [{
   duration: 10,
@@ -12,7 +12,8 @@ const phases = [{
 
 let errorCount = 0
 
-runPhases(phases, () => fetch('http://localhost:3000').catch(() => errorCount++))
+runPhases<Response>(phases, () => fetch('http://localhost:3000').catch(() => errorCount++))
 .then((resultList) => {
+  console.log('Status Codes:', resultList.map((result) => (result as PromiseFulfilledResult<Response>).value.status))
   console.log('Error rate:', (errorCount / resultList.length * 100).toFixed(2) + '%')
 })
